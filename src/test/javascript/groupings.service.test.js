@@ -305,7 +305,7 @@ describe("GroupingsService", function () {
 
         it("should use the correct path", function () {
             gs.getMembershipResults(onSuccess, onError);
-            httpBackend.expectGET(BASE_URL + "members/groupings/").respond(200);
+            httpBackend.expectGET(BASE_URL + "members/filtered-groupings/").respond(200);
             expect(httpBackend.flush).not.toThrow();
         });
     });
@@ -320,7 +320,7 @@ describe("GroupingsService", function () {
 
         it("should use the correct path", function () {
             gs.managePersonResults(member, onSuccess, onError);
-            httpBackend.expectGET(BASE_URL + "members/" + member + "/groupings/all").respond(200);
+            httpBackend.expectGET(BASE_URL + "members/" + member + "/groupings/").respond(200);
             expect(httpBackend.flush).not.toThrow();
         });
     });
