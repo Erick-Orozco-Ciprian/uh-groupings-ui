@@ -204,7 +204,7 @@
              * Get the number of memberships that the current user is associated with.
              */
             getNumberOfMemberships(onSuccess, onError) {
-                let endpoint = BASE_URL + "members/memberships/";
+                let endpoint = BASE_URL + "members/memberships/count";
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 
@@ -279,7 +279,7 @@
              * Get the number of groupings a member owns.
              */
             getNumberOfGroupings(onSuccess, onError) {
-                let endpoint = BASE_URL + "owners/grouping/";
+                let endpoint = BASE_URL + "owners/groupings/count";
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 
