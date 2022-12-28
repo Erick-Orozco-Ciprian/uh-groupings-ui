@@ -187,7 +187,7 @@
              * Get a list of memberships that the current user is associated with.
              */
             getMembershipResults(onSuccess, onError) {
-                let endpoint = BASE_URL + "members/filtered-groupings/";
+                let endpoint = BASE_URL + "members/memberships/";
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 

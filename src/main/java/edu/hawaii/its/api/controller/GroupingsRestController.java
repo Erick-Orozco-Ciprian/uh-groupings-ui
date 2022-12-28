@@ -197,11 +197,11 @@ public class GroupingsRestController {
     /**
      * Get a list of memberships that the current user is associated with.
      */
-    @GetMapping(value = "/members/filtered-groupings")
+    @GetMapping(value = "/members/memberships")
     public ResponseEntity<String> membershipResults(Principal principal) {
         logger.info("Entered REST membershipResults...");
         String principalName = policy.sanitize(principal.getName());
-        String uri = String.format(API_2_1_BASE + "/members/%s/filtered-groupings", principalName);
+        String uri = String.format(API_2_1_BASE + "/members/%s/memberships", principalName);
         return httpRequestService.makeApiRequest(principalName, uri, HttpMethod.GET);
     }
 

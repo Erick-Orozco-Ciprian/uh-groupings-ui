@@ -237,7 +237,7 @@ public class GroupingsRestControllerTest {
     @Test
     @WithMockUhUser
     public void membershipResultsTest() throws Exception {
-        String uri = REST_CONTROLLER_BASE + "members/filtered-groupings";
+        String uri = REST_CONTROLLER_BASE + "members/memberships";
 
         given(httpRequestService.makeApiRequest(eq(USERNAME), anyString(), eq(HttpMethod.GET)))
                 .willReturn(new ResponseEntity(HttpStatus.OK));
