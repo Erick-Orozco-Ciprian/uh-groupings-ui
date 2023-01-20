@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      lang="en">
+<head th:replace="header :: copy"></head>
+<body>
+<p><p>
+    <span th:utext="${loginErrorMessage}"></span>
+</p>
+<p>
+    <span th:utext="${loginErrorExceptionMessage}"></span>
+</p></p>
+<div th:replace="footer :: copy"></div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package edu.hawaii.its.groupings.access;
 
+import edu.hawaii.its.groupings.exceptions.InvalidUhUuidException;
 import edu.hawaii.its.groupings.util.Strings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,6 +49,10 @@ public final class UserBuilder {
         // object just for the demonstration.
         // Above is what might commonly occur.
         user.setAttributes(attributes);
+
+        if (!roleHolder.contains(Role.UH)) {
+            throw new InvalidUhUuidException(uid);
+        }
 
         return user;
     }

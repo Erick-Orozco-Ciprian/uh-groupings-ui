@@ -1,6 +1,9 @@
 package edu.hawaii.its.groupings.controller;
 
+import edu.hawaii.its.groupings.access.Role;
+import edu.hawaii.its.groupings.access.RoleHolder;
 import edu.hawaii.its.groupings.access.UserContextService;
+import edu.hawaii.its.groupings.exceptions.InvalidUhUuidException;
 import edu.hawaii.its.groupings.service.EmailService;
 import edu.hawaii.its.groupings.type.Feedback;
 
@@ -16,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -47,6 +51,16 @@ public class HomeController {
     @GetMapping(value = "/404")
     public String invalid() {
         return "redirect:/";
+    }
+
+    @GetMapping(value = "/uhuuiderror")
+    public String uhUuidError(Model model,
+            @SessionAttribute("login.error.message") String errormsg,
+            @SessionAttribute("login.error.exception.message") String exceptionmsg) {
+        logger.info("User at uhuuiderror.");
+        model.addAttribute("loginErrorMessage", errormsg);
+        model.addAttribute("loginErrorExceptionMessage", exceptionmsg);
+        return "uhuuiderror";
     }
 
     @PreAuthorize("hasRole('ADMIN')")

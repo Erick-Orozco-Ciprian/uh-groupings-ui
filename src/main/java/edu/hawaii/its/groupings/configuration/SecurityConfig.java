@@ -1,7 +1,13 @@
 package edu.hawaii.its.groupings.configuration;
 
+import java.util.Collections;
+import java.util.Map;
+
+import edu.hawaii.its.groupings.access.AuthenticationFailureHandler;
 import edu.hawaii.its.groupings.access.UserBuilder;
 import edu.hawaii.its.groupings.access.CasUserDetailsServiceImpl;
+import edu.hawaii.its.groupings.exceptions.InvalidUhUuidException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
@@ -10,8 +16,12 @@ import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Saml11TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
+import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -21,6 +31,7 @@ import org.springframework.security.cas.web.authentication.ServiceAuthentication
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -131,8 +142,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
+
         CasAuthenticationFilter filter = new CasAuthenticationFilter();
         filter.setAuthenticationManager(authenticationManager());
+
+        filter.setProxyAuthenticationFailureHandler(authenticationFailureHandler());
+        filter.setAuthenticationFailureHandler(authenticationFailureHandler());
 
         SimpleUrlAuthenticationFailureHandler authenticationFailureHandler =
                 new SimpleUrlAuthenticationFailureHandler();
@@ -154,6 +169,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setServiceProperties(serviceProperties());
 
         return filter;
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new edu.hawaii.its.groupings.access.AuthenticationFailureHandler(appUrlBase);
     }
 
     @Override
@@ -183,6 +203,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/groupings/**").hasAnyRole("ADMIN", "OWNER")
                 .antMatchers("/memberships/**").hasRole("UH")
                 .antMatchers("/modal/apiError").permitAll()
+                .antMatchers("/uhuuiderror").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(casAuthenticationFilter())
