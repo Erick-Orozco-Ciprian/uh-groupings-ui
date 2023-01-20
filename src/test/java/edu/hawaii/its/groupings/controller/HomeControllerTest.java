@@ -2,9 +2,10 @@ package edu.hawaii.its.groupings.controller;
 
 import edu.hawaii.its.groupings.configuration.SpringBootWebApplication;
 import edu.hawaii.its.groupings.type.Feedback;
+import edu.hawaii.its.groupings.util.Strings;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,7 +57,7 @@ public class HomeControllerTest {
 
     private MockMvc mockMvc;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mockMvc = webAppContextSetup(context)
                 .apply(springSecurity())
@@ -120,6 +121,16 @@ public class HomeControllerTest {
         MvcResult mvcResult = mockMvc.perform(get("/login"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("home"))
+                .andReturn();
+        assertNotNull(mvcResult);
+    }
+
+    @Test
+    @WithMockUhUser
+    public void requestUhuuiderror() throws Exception {
+        MvcResult mvcResult = mockMvc.perform(get("/uhuuiderror"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("uhuuiderror"))
                 .andReturn();
         assertNotNull(mvcResult);
     }
