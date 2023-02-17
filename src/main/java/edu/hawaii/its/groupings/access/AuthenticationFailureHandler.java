@@ -23,9 +23,9 @@ public class AuthenticationFailureHandler
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException {
-        System.out.println("peepee: " + exception.getMessage());
+        System.out.println("exceptionmessage: " + exception.getMessage());
         logger.warn("onAuthenticationFailure; exception: ", exception);
-        request.getSession().setAttribute("login.error.message", "A login error occurred.");
+        request.getSession().setAttribute("login.error.message", "It appears that you have not logged in with your personal account. Please check. You may have to log back in with your personal UH account to access this service.");
         request.getSession().setAttribute("login.error.exception.message", exception.getMessage());
         response.sendRedirect(appUrlBase + "/uhuuiderror");
     }
