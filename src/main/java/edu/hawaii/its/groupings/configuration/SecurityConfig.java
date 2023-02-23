@@ -1,12 +1,8 @@
 package edu.hawaii.its.groupings.configuration;
 
-import java.util.Collections;
-import java.util.Map;
-
-import edu.hawaii.its.groupings.access.AuthenticationFailureHandler;
+import edu.hawaii.its.groupings.access.DelegatingAuthenticationFailureHandler;
 import edu.hawaii.its.groupings.access.UserBuilder;
 import edu.hawaii.its.groupings.access.CasUserDetailsServiceImpl;
-import edu.hawaii.its.groupings.exceptions.InvalidUhUuidException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,12 +12,8 @@ import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Saml11TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.authentication.AuthenticationEventPublisher;
-import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
-import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAssertionAuthenticationToken;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -31,8 +23,8 @@ import org.springframework.security.cas.web.authentication.ServiceAuthentication
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -154,11 +146,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         authenticationFailureHandler.setDefaultFailureUrl(appUrlHome);
         filter.setAuthenticationFailureHandler(authenticationFailureHandler);
 
-        SavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler =
-                new SavedRequestAwareAuthenticationSuccessHandler();
-        authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(false);
-        authenticationSuccessHandler.setDefaultTargetUrl(appUrlHome);
-        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        filter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
 
         ServiceAuthenticationDetailsSource authenticationDetailsSource =
                 new ServiceAuthenticationDetailsSource(serviceProperties());
@@ -172,8 +160,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new edu.hawaii.its.groupings.access.AuthenticationFailureHandler(appUrlBase);
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler authenticationSuccessHandler =
+                new SavedRequestAwareAuthenticationSuccessHandler();
+        authenticationSuccessHandler.setAlwaysUseDefaultTargetUrl(false);
+        authenticationSuccessHandler.setDefaultTargetUrl(appUrlHome);
+        return authenticationSuccessHandler;
+    }
+
+    @Bean
+    public DelegatingAuthenticationFailureHandler authenticationFailureHandler() {
+//        return new edu.hawaii.its.groupings.access.AuthenticationFailureHandler(appUrlBase);
+        return new DelegatingAuthenticationFailureHandler(appUrlBase + "/uhuuiderror");
     }
 
     @Override

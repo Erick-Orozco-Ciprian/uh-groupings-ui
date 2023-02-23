@@ -51,7 +51,8 @@ public final class UserBuilder {
         user.setAttributes(attributes);
 
         if (!roleHolder.contains(Role.UH)) {
-            throw new InvalidUhUuidException(uid);
+//            throw new InvalidUhUuidException(uid);
+            throw new UsernameNotFoundException(uid);
         }
 
         return user;

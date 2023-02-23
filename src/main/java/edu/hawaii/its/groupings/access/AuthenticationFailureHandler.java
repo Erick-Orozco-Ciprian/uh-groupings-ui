@@ -14,10 +14,10 @@ public class AuthenticationFailureHandler
 
     private static final Log logger = LogFactory.getLog(AuthenticationFailureHandler.class);
 
-    private final String appUrlBase;
+    private final String redirectUrl;
 
-    public AuthenticationFailureHandler(String appUrlBase) {
-        this.appUrlBase = appUrlBase;
+    public AuthenticationFailureHandler(String appUrlError) {
+        this.redirectUrl = appUrlError;
     }
 
     @Override
@@ -27,6 +27,6 @@ public class AuthenticationFailureHandler
         logger.warn("onAuthenticationFailure; exception: ", exception);
         request.getSession().setAttribute("login.error.message", "It appears that you have not logged in with your personal account. Please check. You may have to log back in with your personal UH account to access this service.");
         request.getSession().setAttribute("login.error.exception.message", exception.getMessage());
-        response.sendRedirect(appUrlBase + "/uhuuiderror");
+        response.sendRedirect(redirectUrl);
     }
 }
