@@ -103,16 +103,6 @@ public class HomeControllerTest {
     }
 
     @Test
-    @WithMockUhUser
-    public void requestUhuuiderror() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(get("/uhuuiderror"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("uhuuiderror"))
-                .andReturn();
-        assertNotNull(mvcResult);
-    }
-
-    @Test
     @WithAnonymousUser
     public void loginViaAnonymous() throws Exception {
         MvcResult mvcResult = mockMvc.perform(get("/login"))

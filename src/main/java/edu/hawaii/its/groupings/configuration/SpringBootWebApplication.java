@@ -21,4 +21,5 @@ public class SpringBootWebApplication extends SpringBootServletInitializer {
     private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
         return builder.sources(SpringBootWebApplication.class).bannerMode(Banner.Mode.OFF);
     }
+
 }
