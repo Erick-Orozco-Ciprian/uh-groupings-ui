@@ -9,8 +9,10 @@
      * @param $controller - service for instantiating controllers
      * @param $uibModal - the UI Bootstrap service for creating modals
      * @param dataProvider - service function that provides GET and POST requests for getting or updating data
+     * @param groupingsService - service for requesting data from the groupings API
+     * @param Message - display messages
      */
-    function AdminJsController($scope, $window, $uibModal, $controller, dataProvider, groupingsService) {
+    function AdminJsController($scope, $window, $uibModal, $controller, dataProvider, groupingsService, Message) {
 
         $scope.adminsList = [];
         $scope.pagedItemsAdmins = [];
@@ -389,6 +391,44 @@
             $scope.searchForUserGroupingInformation();
             groupingsService.getAdminLists($scope.getAdminListsCallbackOnSuccess, $scope.displayApiErrorModal);
         };
+
+        $scope.handleGroupingOwnersOnSuccess = function (res) {
+            $scope.loading = false;
+            $scope.names = [];
+            for (let i = 0; i < res.groupMembers.length; i++) {
+                $scope.names[parseInt(i, 10)] = res.groupMembers[parseInt(i, 10)].name;
+            }
+            $scope.usernames = [];
+            for (let i = 0; i < res.groupMembers.length; i++) {
+                $scope.usernames[parseInt(i, 10)] = res.groupMembers[parseInt(i, 10)].uid;
+            }
+            $scope.uhuids = [];
+            for (let i = 0; i < res.groupMembers.length; i++) {
+                $scope.uhuids[parseInt(i, 10)] = res.groupMembers[parseInt(i, 10)].uhUuid;
+            }
+            $scope.displayGroupingOwnersModal();
+        }
+
+        $scope.handleGroupingOwnersOnError = function () {
+            $scope.loading = false;
+            $scope.displayDynamicModal(Message.Title.DISPLAY_OWNERS_ERROR, Message.Body.DISPLAY_OWNERS_ERROR);
+        }
+
+        $scope.displayGroupingOwnersModal = function () {
+            $scope.groupingOwnersModal = $uibModal.open({
+                templateUrl: "modal/groupingOwnersModal",
+                scope: $scope
+            });
+            $scope.displayGroupingOwnersModalOnClose = function () {
+                $scope.groupingOwnersModal.close();
+                $scope.ownersModalGroupingPath = "";
+            };
+        };
+
+        $scope.getGroupingOwnersOnClick = function (groupingPath) {
+            $scope.ownersModalGroupingPath = groupingPath;
+            groupingsService.groupingOwners($scope.ownersModalGroupingPath, $scope.handleGroupingOwnersOnSuccess, $scope.handleGroupingOwnersOnError);
+        }
     }
 
     UHGroupingsApp.controller("AdminJsController", AdminJsController);
