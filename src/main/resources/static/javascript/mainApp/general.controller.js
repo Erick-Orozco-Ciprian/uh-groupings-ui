@@ -131,7 +131,7 @@
             };
         });
 
-        $scope.init = function() {
+        $scope.init = function () {
             /**
              * Get the number of memberships that the current user is associated with.
              */
@@ -184,6 +184,7 @@
          * @returns {object[]} the members of the group, sorted by name and with blank usernames filtered out
          */
         function setGroupMembers(members) {
+            console.log(members);
             _.remove(members, function (member) {
                 return _.isEmpty(member.name);
             });
@@ -200,7 +201,9 @@
          * @param {object[]} membersToAdd - members to add to group
          * @returns {object[]} the members of both groups in one array, sorted by name with blank usernames filtered out
          */
-        function combineGroupMembers(initialMembers, membersToAdd) {
+        function combineGroupMembers(membersToAdd, initialMembers) {
+            console.log(membersToAdd);
+            console.log(initialMembers);
 
             _.remove(membersToAdd, function (member) {
                 return _.isEmpty(member.name);
@@ -227,12 +230,76 @@
                 }
             });
         };
+        $scope.fetchGrouping = function (currentPage, groupPaths) {
+            return new Promise((resolve) => {
+                groupingsService.getMyGrouping(groupPaths, currentPage, PAGE_SIZE, "name", true, function (res) {
+                    console.log(res);
+                    if (res.basis || res.include || res.exclude || res.owners) {
+                        let putGroupMembers = combineGroupMembers;
+                        if (currentPage === 1) {
+                            putGroupMembers = setGroupMembers;
+                        }
+                        res.groupsMembersList.forEach((group) => {
+                            if(group.groupPath.endsWith("basis")) {
+                                $scope.groupingBasis = putGroupMembers(group.groupMembers, $scope.groupingBasis);
+                                $scope.filter($scope.groupingBasis, "pagedItemsBasis", "currentPageBasis", $scope.basisQuery, false);
+                            }
+                            if(group.groupPath.endsWith("include")) {
+                                $scope.groupingInclude= putGroupMembers(group.groupMembers, $scope.groupingInclude);
+                                $scope.filter($scope.groupingInclude, "pagedItemsInclude", "currentPageInclude", $scope.includeQuery, false);
+                            }
+                            if(group.groupPath.endsWith("exclude")) {
+                                $scope.groupingExclude= putGroupMembers(group.groupMembers, $scope.groupingExclude);
+                                $scope.filter($scope.groupingExclude, "pagedItemsExclude", "currentPageExclude", $scope.excludeQuery, false);
+                            }
+                            if(group.groupPath.endsWith("owners")) {
+                                $scope.groupingOwners= putGroupMembers(group.groupMembers, $scope.groupingOwners);
+                                $scope.filter($scope.groupingOwners, "pagedItemsOwners", "currentPageOwners", $scope.ownersQuery, false);
+                            }
+                        })
+                        $scope.groupingDescription = "";
+                        $scope.descriptionLoaded = true;
+                        $scope.allowOptIn = true;
+                        $scope.allowOptOut = true;
+                        $scope.syncDestArray = [];
+                    } else {
+                        $scope.paginatingComplete = true;
+                        $scope.paginatingProgress = false;
+                    }
+                    resolve();
+
+                }, (res) => {
+                    console.log(res);
+                    $scope.paginatingComplete = true;
+                    $scope.resStatus = res.status;
+                    $scope.paginatingProgress = false;
+                    resolve();
+                });
+            });
+        };
+
+        /**
+         * Fetch information about the grouping including members and description.
+         */
+        $scope.getGroupingInformation = async function () {
+            const groupingPath = $scope.selectedGrouping.path;
+            let groupPaths = [groupingPath +":basis",groupingPath +":include", groupingPath +":exclude", groupingPath +":owners"];
+            let currentPage = 1;
+            $scope.loading = true;
+            $scope.paginatingComplete = false;
+            while (!($scope.paginatingComplete)) {
+                $scope.paginatingProgress = true;
+                await $scope.fetchGrouping(currentPage, groupPaths);
+                currentPage++;
+                $scope.loading = false;
+            }
+        };
 
         /**
          * Gets information about the grouping, such as its members and the preferences set.
          * Retrieves information asynchronously page by page
          */
-        $scope.getGroupingInformation = function () {
+        $scope.getMyGroupingInformation = function () {
 
             $scope.loading = true;
 
