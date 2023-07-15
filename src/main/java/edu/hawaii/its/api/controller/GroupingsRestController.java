@@ -463,6 +463,13 @@ public class GroupingsRestController {
         String uri = String.format(API_2_1_BASE + "/grouping/%s/owners", groupingPath);
         return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
     }
+
+    @GetMapping(value = "/tester")
+    public ResponseEntity<String> tester(Principal principal) {
+        logger.info("Entered REST tester...");
+        String uri = String.format(API_2_1_BASE + "/tester", principal.getName());
+        return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
+    }
     /**
      * Give ownership of grouping at grouping path to newOwner. A user with owner privileges has
      * read and write privileges

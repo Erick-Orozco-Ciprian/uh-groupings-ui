@@ -14,10 +14,21 @@
 <main>
     <div class="container mt-5 mb-5">
         <div class="row">
-            <div class="pr-0 pl-0 mt-1 mx-auto pt-0" tooltip data-placement="right"
-                 th:title="HelloTester" role="button">
-                <span class="planned-outage" th:href="@{/planned-outage}">Planned </span>
-<!--                   aria-label="Outage" ng-click="resetFields()"-->
+            <div class="pr-0 pl-0 mt-1 mx-auto pt-0">
+                <li class="nav-item" sec:authorize="!isAuthenticated()" ng-controller="HomeJsController">
+                    <div class="dropdown-divider d-block d-lg-none"></div>
+                    <a class="nav-link"
+                       ng-click="test()">Click</a>
+<!--                       th:action="@{/planned-outage}"-->
+                    <div class="col-sm-7 d-inline-flex align-items-center">
+                        <div class="alert alert-warning" role="alert">
+                            Currently undergoing planned maintenance. Site unavailable during this time.
+                        </div>
+                    </div>
+                </li>
+<!--                      role="button">Click</span>-->
+<!--                      aria-label="Outage" ng-click="alert('hellooo')"-->
+
 
             </div>
             <div class="col-sm-7 d-inline-flex align-items-center">

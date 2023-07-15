@@ -76,6 +76,9 @@
                     }, (response) => {
                         callError(response);
                     });
+                console.log(url);
+                console.log(callback);
+                console.log(callError);
             },
 
             /**

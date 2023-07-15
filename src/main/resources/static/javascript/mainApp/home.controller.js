@@ -10,6 +10,20 @@
      */
     function HomeJsController($scope, $controller, groupingsService) {
 
+        $scope.testOnSuccess = () => {
+            console.log("in success");
+        };
+
+        $scope.testOnError = () => {
+            console.log("in error");
+            $scope.loading = false;
+        };
+
+        $scope.test = () => {
+            console.log("in test");
+            groupingsService.testerThing($scope.testOnSuccess,$scope.testOnError);
+        };
+
         $scope.init = () => {
             /**
              * Get the number of memberships that the current user is associated with.

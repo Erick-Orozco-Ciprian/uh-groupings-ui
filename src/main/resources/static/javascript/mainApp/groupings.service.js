@@ -339,6 +339,11 @@
                 dataProvider.updateData(endpoint, onSuccess, onError);
             },
 
+            testerThing(onSuccess, onError) {
+                let endpoint = BASE_URL + "tester";
+                dataProvider.loadData(endpoint, onSuccess, onError);
+            },
+
             /**
              * Get a list of owners in the current path.
              */
