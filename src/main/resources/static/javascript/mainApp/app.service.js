@@ -75,10 +75,13 @@
                         callback(response.data);
                     }, (response) => {
                         callError(response);
-                    });
-                console.log(url);
-                console.log(callback);
-                console.log(callError);
+                        console.log("inside loadData");
+                        console.log(callError(response.data));
+                        console.log(callback(response.data));
+                        console.log("done with loadData");
+                    }).catch((error) => {
+                    console.log('Error:', error);
+                });
             },
 
             /**

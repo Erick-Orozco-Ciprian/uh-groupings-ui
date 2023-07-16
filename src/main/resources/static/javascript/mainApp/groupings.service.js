@@ -341,6 +341,7 @@
 
             testerThing(onSuccess, onError) {
                 let endpoint = BASE_URL + "tester";
+                console.log('the endpoint: ' + endpoint);
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 

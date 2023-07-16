@@ -10,17 +10,17 @@
      */
     function HomeJsController($scope, $controller, groupingsService) {
 
-        $scope.testOnSuccess = () => {
+        $scope.testOnSuccess = (res) => {
             console.log("in success");
         };
 
-        $scope.testOnError = () => {
+        $scope.testOnError = (res) => {
             console.log("in error");
             $scope.loading = false;
+            // console.log(res);
         };
 
         $scope.test = () => {
-            console.log("in test");
             groupingsService.testerThing($scope.testOnSuccess,$scope.testOnError);
         };
 
