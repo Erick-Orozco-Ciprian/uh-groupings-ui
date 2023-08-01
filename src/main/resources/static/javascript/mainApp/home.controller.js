@@ -12,10 +12,14 @@
 
         $scope.testOnSuccess = (res) => {
             console.log("in success");
+            console.log("res: " + res);
+            console.log("out of success");
         };
 
         $scope.testOnError = (res) => {
             console.log("in error");
+            console.log("res: " + res);
+            console.log("out of error");
             $scope.loading = false;
             // console.log(res);
         };
