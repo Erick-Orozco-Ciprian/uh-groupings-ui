@@ -70,15 +70,15 @@
              * @param {function} callError - Execute if response returns as an error.
              */
             loadData(url, callback, callError) {
+                console.log("in loadData");
+                console.log("calling encodeURI: " + encodeURI(url));
                 $http.get(encodeURI(url))
                     .then((response) => {
+                        console.log("in first part of loadData");
                         callback(response.data);
                     }, (response) => {
+                        console.log("in second part of loadData");
                         callError(response);
-                        console.log("inside loadData");
-                        console.log(callError(response.data));
-                        console.log(callback(response.data));
-                        console.log("done with loadData");
                     }).catch((error) => {
                     console.log('Error:', error);
                 });

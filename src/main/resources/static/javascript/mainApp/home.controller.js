@@ -12,21 +12,26 @@
 
         $scope.testOnSuccess = (res) => {
             console.log("in success");
-            console.log("res: " + res);
-            console.log("out of success");
+            if (res != null) {
+                console.log("returning true:");
+                return true;
+            }
+            console.log("returning false");
+            return false;
         };
 
-        $scope.testOnError = (res) => {
+        $scope.testOnError = () => {
             console.log("in error");
-            console.log("res: " + res);
-            console.log("out of error");
             $scope.loading = false;
-            // console.log(res);
+            console.log("returning false:")
+            return false;
         };
 
         $scope.test = () => {
-            groupingsService.testerThing($scope.testOnSuccess,$scope.testOnError);
+            console.log("in test");
+            return groupingsService.testerThing($scope.testOnSuccess,$scope.testOnError);
         };
+        $scope.someVar = $scope.test();
 
         $scope.init = () => {
             /**

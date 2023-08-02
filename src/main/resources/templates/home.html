@@ -15,20 +15,25 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="pr-0 pl-0 mt-1 mx-auto pt-0">
-                <li class="nav-item" ng-controller="HomeJsController">
+                <div class="nav-item" ng-controller="HomeJsController">
                     <div class="dropdown-divider d-block d-lg-none"></div>
-                    <a class="nav-link"
-                       ng-click="test()">Click</a>
+<!--                    <a class="nav-link"-->
+<!--                       ng-click="test()">Click</a>-->
 <!--                       th:action="@{/planned-outage}"-->
-                    <div class="col-sm-7 d-inline-flex align-items-center">
+<!--                    <div> ng-if="test() == 'hi'" </div>-->
+<!--                    //must call it one time only, cannot keep ng-if otherwise it'll be like an implied while-->
+                    <div ng-if="someVar == true">
                         <div class="alert alert-warning" role="alert">
                             Currently undergoing planned maintenance. Site unavailable during this time.
                         </div>
                     </div>
-                </li>
+<!--                <div th:if=1 class="alert alert-warning col-md-12" role="alert">-->
+<!--                    Currently undergoing planned maintenance. Site unavailable during this time.-->
+<!--                </div>-->
+                <div class="col-sm-7 d-inline-flex align-items-center"></div>
+                </div>
 <!--                      role="button">Click</span>-->
 <!--                      aria-label="Outage" ng-click="alert('hellooo')"-->
-
 
             </div>
             <div class="col-sm-7 d-inline-flex align-items-center">
