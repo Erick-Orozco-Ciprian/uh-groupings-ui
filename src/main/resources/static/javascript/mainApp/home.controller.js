@@ -9,22 +9,22 @@
      * @param groupingsService - service for creating requests to the groupings API
      */
     function HomeJsController($scope, $controller, groupingsService) {
-        // $scope.testOnSuccess = (res) => {
-        //     console.log("in success, res:" + res);
-        //     if (res != null) {
-        //         console.log("assigning someVar to be true from onSuccess");
-        //         $scope.someVar = true;
-        //     }
-        //     $scope.someVar = false;
-        //     console.log("assigning someVar to be false from onSuccess");
-        // };
-        //
-        // $scope.testOnError = () => {
-        //     console.log("in error");
-        //     $scope.loading = false;
-        //     console.log("returning false from error:")
-        //     $scope.someVar = false;
-        // };
+        $scope.testOnSuccess = (res) => {
+            console.log("in success, res:" + res);
+            if (res != null) {
+                console.log("assigning someVar to be true from onSuccess");
+                $scope.someVar = true;
+            }
+            $scope.someVar = false;
+            console.log("assigning someVar to be false from onSuccess");
+        };
+
+        $scope.testOnError = () => {
+            console.log("in error");
+            $scope.loading = false;
+            console.log("returning false from error:")
+            $scope.someVar = false;
+        };
 
         // $scope.someVar = $scope.test();
         // console.log("someVar = " + $scope.someVar);
@@ -48,18 +48,17 @@
             );
 
             groupingsService.testerThing((res) => {
-                $scope.someVar = res;
                 console.log("in test, res:" + res);
-                if ($scope.someVar != null) {
-                    console.log("assigning someVar to be false from init lalal");
-                    $scope.someVar = false;
+                if (res != null) {
+                    console.log("assigning someVar to be true from init lalal");
+                    $scope.someVar = true;
                     console.log("someVar = " + $scope.someVar);
                 } else {
                     console.log("assigning someVar to be false from init");
                     $scope.someVar = false;
                 }
             });
-        // console.log("someVar = " + $scope.someVar);
+        console.log("someVar on line 61 =  " + $scope.someVar);
         };
     }
 
