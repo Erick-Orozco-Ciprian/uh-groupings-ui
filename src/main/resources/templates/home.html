@@ -22,7 +22,9 @@
 <!--                       th:action="@{/planned-outage}"-->
 <!--                    <div> ng-if="test() == 'hi'" </div>-->
 <!--                    //must call it one time only, cannot keep ng-if otherwise it'll be like an implied while-->
-                    <div ng-if="someVar == true">
+
+
+                    <div ng-if="someVar">
                         <div class="alert alert-warning" role="alert">
                             Currently undergoing planned maintenance. Site unavailable during this time.
                         </div>
