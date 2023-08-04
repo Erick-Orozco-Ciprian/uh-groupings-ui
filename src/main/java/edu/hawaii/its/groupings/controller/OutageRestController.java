@@ -31,7 +31,6 @@ public class OutageRestController {
 
     @Autowired
     private HttpRequestService httpRequestService;
-
     @GetMapping(value = "/openapi/tester")
     public ResponseEntity<String> tester() {
         if (!API_HANDSHAKE_ENABLED) {

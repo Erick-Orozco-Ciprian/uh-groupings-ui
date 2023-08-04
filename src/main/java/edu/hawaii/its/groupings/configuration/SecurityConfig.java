@@ -175,6 +175,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 .antMatchers("/openapi/tester").permitAll()
 =======
                 .antMatchers("/tester").permitAll()
@@ -182,6 +183,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 =======
                 .antMatchers("/openapi/tester").permitAll()
 >>>>>>> ba3ec1b3 (fix Cors problem)
+=======
+                .antMatchers("/openapi/tester").permitAll()
+>>>>>>> e080a747 (Display planned outage announcement on the home page)
                 .antMatchers("/api/**").hasRole("UH")
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/fonts/**").permitAll()
