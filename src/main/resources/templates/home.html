@@ -16,6 +16,13 @@
         <div class="row">
             <div class="col-sm-7 d-inline-flex align-items-center">
                 <div>
+                    <div data-ng-controller="OutageMessageJsController" ng-init="init()">
+                        <div ng-if="outageMessage">
+                            <div class="alert alert-warning" role="alert">
+                                <span ng-bind="outageMessage"></span>
+                            </div>
+                        </div>
+                    </div>
                     <h1 class="sr-only">UH Groupings</h1>
                     <img class="img-fluid align-self-center"
                          alt="UH Groupings logotype"

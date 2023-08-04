@@ -393,6 +393,10 @@
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 
+            testerThing(onSuccess, onError) {
+                let endpoint = "openapi/tester";
+                dataProvider.loadData(endpoint, onSuccess, onError);
+            },
             /**
              * Get the number of groupings a member owns.
              */
