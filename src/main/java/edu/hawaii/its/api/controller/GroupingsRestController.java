@@ -647,6 +647,16 @@ public class GroupingsRestController {
         return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
     }
 
+    /**
+     * Get outageMessage.
+     */
+    @GetMapping(value = "/tester")
+    public ResponseEntity<String> tester(Principal principal) {
+        logger.info("Entered REST tester...");
+        String uri = String.format(API_2_1_BASE + "/tester", principal.getName());
+        return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
+    }
+
     ///////////////////////////////////////////////////////////////////////
     // Helper Methods
     //////////////////////////////////////////////////////////////////////

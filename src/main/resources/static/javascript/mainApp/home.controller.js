@@ -9,6 +9,24 @@
      * @param groupingsService - service for creating requests to the groupings API
      */
     function HomeJsController($scope, $controller, groupingsService) {
+<<<<<<< HEAD
+=======
+
+        /**
+         * Get outageMessage.
+         */
+        $scope.getOutageMessage = () =>{
+            groupingsService.testerThing((res) =>{
+                $scope.outageMessage = res;
+                console.log($scope.outageMessage);
+            }, (err) =>{
+                    console.log("Cannot get outageMessage back!");
+                }
+            )
+        }
+
+
+>>>>>>> 44e66e46 (fix call error and rename variable)
         $scope.init = () => {
             /**
              * Get the number of memberships that the current user is associated with.
