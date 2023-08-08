@@ -73,15 +73,10 @@
                 console.log("calling encodeURI: " + encodeURI(url));
                 $http.get(encodeURI(url))
                     .then((response) => {
-                        console.log("in first part of loadData");
                         callback(response.data);
-                        console.log("response.data: " + response.data)
                     }, (response) => {
-                        console.log("in second part of loadData");
                         callError(response);
-                    }).catch((error) => {
-                    console.log('Error:', error);
-                });
+                    });
             },
 
             /**

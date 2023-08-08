@@ -15,20 +15,24 @@
     <div class="container mt-5 mb-5">
         <div class="row">
             <div class="pr-0 pl-0 mt-1 mx-auto pt-0">
-                <div class="nav-item" ng-controller="HomeJsController">
+                <div class="nav-item">
                     <div class="dropdown-divider d-block d-lg-none"></div>
 <!--                    <a class="nav-link"-->
 <!--                       ng-click="test()">Click</a>-->
 <!--                       th:action="@{/planned-outage}"-->
 <!--                    <div> ng-if="test() == 'hi'" </div>-->
-<!--                    //must call it one time only, cannot keep ng-if otherwise it'll be like an implied while-->
-
-
-                    <div ng-if="someVar">
+<!--&lt;!&ndash;                    //must call it one time only, cannot keep ng-if otherwise it'll be like an implied while&ndash;&gt;-->
+                    <div ng-controller="HomeJsController" data-ng-init="init()" ng-show="someVar">
                         <div class="alert alert-warning" role="alert">
-                            Currently undergoing planned maintenance. Site unavailable during this time.
+                            <span>{{ outageMessage }}</span>
                         </div>
                     </div>
+<!--                    <div ng-controller="HomeJsController" ng-init="init()" ng-if="outageMessage">-->
+<!--                        <div class="alert alert-warning" role="alert">-->
+<!--                            This is outageMessage:-->
+<!--                            <span ng-bind="outageMessage"></span>-->
+<!--                        </div>-->
+<!--                    </div>-->
 <!--                <div th:if=1 class="alert alert-warning col-md-12" role="alert">-->
 <!--                    Currently undergoing planned maintenance. Site unavailable during this time.-->
 <!--                </div>-->
@@ -141,44 +145,44 @@
                 </div>
             </div>
         </div>
-        <div ng-controller="HomeJsController" data-ng-init="init()">
-        <div class="container mt-5 mb-5">
-            <div class="row">
-                <div class="col-md-4 mb-5 mb-md-0" sec:authorize="hasRole('ROLE_ADMIN')">
-                    <div class="dashboard-item-icon text-primary mb-3">
-                        <i class="fa fa-key fa-3x mr-4" aria-hidden="true"></i>
-                    </div>
-                    <div>
-                        <h2 class="h4">Administration</h2>
-                        <p>Manage the list of Administrators for this service. Search for and manage any grouping on
-                            behalf of the owner.</p>
-                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/admin}">Admin</a>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-5 mb-md-0" sec:authorize="hasRole('ROLE_UH')">
-                    <div class="text-primary mb-3">
-                        <i class="fa fa-id-card fa-3x mr-4" aria-hidden="true"></i>
-                        <span ng-bind="numberOfMemberships" id="memberCount" class="h1"></span>
-                    </div>
-                    <div>
-                        <h2 class="h4">Memberships</h2>
-                        <p>View and manage my memberships. Search for new groupings to join as a member.</p>
-                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/memberships}">Memberships</a>
-                    </div>
-                </div>
-                <div class="col-md-4" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')">
-                    <div class="text-primary mb-3">
-                        <i class="fa fa-wrench fa-3x mr-3" aria-hidden="true"></i>
-                        <span ng-bind="numberOfGroupings" id="groupCount" class="h1"></span>
-                    </div>
-                    <div>
-                        <h2 class="h4">Groupings</h2>
-                        <p>Review members, manage Include and Exclude lists, configure preferences, and export members.</p>
-                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/groupings}">Groupings</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div ng-controller="HomeJsController" data-ng-init="init()">-->
+<!--        <div class="container mt-5 mb-5">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-4 mb-5 mb-md-0" sec:authorize="hasRole('ROLE_ADMIN')">-->
+<!--                    <div class="dashboard-item-icon text-primary mb-3">-->
+<!--                        <i class="fa fa-key fa-3x mr-4" aria-hidden="true"></i>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <h2 class="h4">Administration</h2>-->
+<!--                        <p>Manage the list of Administrators for this service. Search for and manage any grouping on-->
+<!--                            behalf of the owner.</p>-->
+<!--                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/admin}">Admin</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-4 mb-5 mb-md-0" sec:authorize="hasRole('ROLE_UH')">-->
+<!--                    <div class="text-primary mb-3">-->
+<!--                        <i class="fa fa-id-card fa-3x mr-4" aria-hidden="true"></i>-->
+<!--                        <span ng-bind="numberOfMemberships" id="memberCount" class="h1"></span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <h2 class="h4">Memberships</h2>-->
+<!--                        <p>View and manage my memberships. Search for new groupings to join as a member.</p>-->
+<!--                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/memberships}">Memberships</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-4" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')">-->
+<!--                    <div class="text-primary mb-3">-->
+<!--                        <i class="fa fa-wrench fa-3x mr-3" aria-hidden="true"></i>-->
+<!--                        <span ng-bind="numberOfGroupings" id="groupCount" class="h1"></span>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <h2 class="h4">Groupings</h2>-->
+<!--                        <p>Review members, manage Include and Exclude lists, configure preferences, and export members.</p>-->
+<!--                        <a class="btn dark-teal-bg btn-bottom" th:href="@{/groupings}">Groupings</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         </div>
     </div>
 </main>
