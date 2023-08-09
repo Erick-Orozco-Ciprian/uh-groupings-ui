@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 import edu.hawaii.its.api.service.HttpRequestService;
+import edu.hawaii.its.api.service.HttpRequestService2;
 import edu.hawaii.its.groupings.access.User;
 import edu.hawaii.its.groupings.access.UserContextService;
 import edu.hawaii.its.groupings.configuration.Realm;
@@ -65,6 +66,9 @@ public class GroupingsRestController {
 
     @Autowired
     private HttpRequestService httpRequestService;
+
+    @Autowired
+    private HttpRequestService2 httpRequestService2;
 
     @Autowired
     private Realm realm;
@@ -653,8 +657,9 @@ public class GroupingsRestController {
     @GetMapping(value = "/tester")
     public ResponseEntity<String> tester(Principal principal) {
         logger.info("Entered REST tester...");
-        String uri = String.format(API_2_1_BASE + "/tester", principal.getName());
-        return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
+        String uri = String.format(API_2_1_BASE + "/tester");
+        logger.info(uri);
+        return  httpRequestService2.makeApiRequest(uri, HttpMethod.GET);
     }
 
     ///////////////////////////////////////////////////////////////////////
