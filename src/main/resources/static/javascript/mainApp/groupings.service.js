@@ -339,9 +339,8 @@
                 dataProvider.updateData(endpoint, onSuccess, onError);
             },
 
-            testerThing(onSuccess, onError) {
-                let endpoint = BASE_URL + "tester";
-                console.log('the endpoint: ' + endpoint);
+            getOutageMessage(onSuccess, onError) {
+                let endpoint = BASE_URL + "getOutageMessage";
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
 

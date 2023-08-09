@@ -24,15 +24,9 @@
 <!--&lt;!&ndash;                    //must call it one time only, cannot keep ng-if otherwise it'll be like an implied while&ndash;&gt;-->
                     <div ng-controller="HomeJsController" data-ng-init="init()" ng-show="someVar">
                         <div class="alert alert-warning" role="alert">
-                            <span>{{ outageMessage }}</span>
+                            <span ng-bind="outageMessage"></span>
                         </div>
                     </div>
-<!--                    <div ng-controller="HomeJsController" ng-init="init()" ng-if="outageMessage">-->
-<!--                        <div class="alert alert-warning" role="alert">-->
-<!--                            This is outageMessage:-->
-<!--                            <span ng-bind="outageMessage"></span>-->
-<!--                        </div>-->
-<!--                    </div>-->
 <!--                <div th:if=1 class="alert alert-warning col-md-12" role="alert">-->
 <!--                    Currently undergoing planned maintenance. Site unavailable during this time.-->
 <!--                </div>-->
