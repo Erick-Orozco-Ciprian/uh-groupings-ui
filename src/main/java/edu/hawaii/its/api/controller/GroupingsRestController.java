@@ -10,10 +10,12 @@ import edu.hawaii.its.groupings.access.User;
 import edu.hawaii.its.groupings.access.UserContextService;
 import edu.hawaii.its.groupings.configuration.Realm;
 import edu.hawaii.its.groupings.exceptions.ApiServerHandshakeException;
+import edu.hawaii.its.groupings.util.JsonUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -649,17 +651,6 @@ public class GroupingsRestController {
         String safeJobId = policy.sanitize(jobId);
         String uri = String.format(API_2_1_BASE + "/jobs/%s", safeJobId);
         return httpRequestService.makeApiRequest(principal.getName(), uri, HttpMethod.GET);
-    }
-
-    /**
-     * Get outageMessage.
-     */
-    @GetMapping(value = "/tester")
-    public ResponseEntity<String> tester(Principal principal) {
-        logger.info("Entered REST tester...");
-        String uri = String.format(API_2_1_BASE + "/tester");
-        logger.info(uri);
-        return  httpRequestService2.makeApiRequest(uri, HttpMethod.GET);
     }
 
     ///////////////////////////////////////////////////////////////////////
