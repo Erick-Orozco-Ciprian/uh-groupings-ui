@@ -1,13 +1,14 @@
 package edu.hawaii.its.groupings.configuration;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Saml11TicketValidator;
+import edu.hawaii.its.groupings.access.CasUserDetailsServiceImpl;
+import edu.hawaii.its.groupings.access.DelegatingAuthenticationFailureHandler;
+import edu.hawaii.its.groupings.access.UserBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,9 +30,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.util.Assert;
 
-import edu.hawaii.its.groupings.access.CasUserDetailsServiceImpl;
-import edu.hawaii.its.groupings.access.DelegatingAuthenticationFailureHandler;
-import edu.hawaii.its.groupings.access.UserBuilder;
+import javax.annotation.PostConstruct;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -172,20 +171,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionFixation().migrateSession();
 
         http.authorizeRequests()
-                .antMatchers("/").permitAll()
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 .antMatchers("/openapi/tester").permitAll()
-=======
-                .antMatchers("/tester").permitAll()
->>>>>>> 444483fd (Create OutageRestController)
-=======
-                .antMatchers("/openapi/tester").permitAll()
->>>>>>> ba3ec1b3 (fix Cors problem)
-=======
-                .antMatchers("/openapi/tester").permitAll()
->>>>>>> e080a747 (Display planned outage announcement on the home page)
                 .antMatchers("/api/**").hasRole("UH")
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/fonts/**").permitAll()
