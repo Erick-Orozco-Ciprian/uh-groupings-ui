@@ -174,10 +174,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
 <<<<<<< HEAD
+<<<<<<< HEAD
                 .antMatchers("/openapi/tester").permitAll()
 =======
                 .antMatchers("/tester").permitAll()
 >>>>>>> 444483fd (Create OutageRestController)
+=======
+                .antMatchers("/openapi/tester").permitAll()
+>>>>>>> ba3ec1b3 (fix Cors problem)
                 .antMatchers("/api/**").hasRole("UH")
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/fonts/**").permitAll()

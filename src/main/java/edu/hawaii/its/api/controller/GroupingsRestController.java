@@ -5,17 +5,14 @@ import org.apache.commons.logging.LogFactory;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
 import edu.hawaii.its.api.service.HttpRequestService;
-import edu.hawaii.its.api.service.HttpRequestService2;
 import edu.hawaii.its.groupings.access.User;
 import edu.hawaii.its.groupings.access.UserContextService;
 import edu.hawaii.its.groupings.configuration.Realm;
 import edu.hawaii.its.groupings.exceptions.ApiServerHandshakeException;
-import edu.hawaii.its.groupings.util.JsonUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -68,9 +65,6 @@ public class GroupingsRestController {
 
     @Autowired
     private HttpRequestService httpRequestService;
-
-    @Autowired
-    private HttpRequestService2 httpRequestService2;
 
     @Autowired
     private Realm realm;
