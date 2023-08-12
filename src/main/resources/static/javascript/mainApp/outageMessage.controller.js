@@ -7,7 +7,7 @@
      * @param $controller - service for instantiating controllers
      * @param groupingsService - service for creating requests to the groupings API
      */
-    function OutageMessageJsController($scope, $controller, groupingsService, $http) {
+    function OutageMessageJsController($scope, $controller, groupingsService) {
         /**
          * Get outageMessage.
          */
@@ -15,7 +15,7 @@
             groupingsService.testerThing((res) =>{
                 $scope.outageMessage = res;
             }, (err) =>{
-                    console.log(err);
+                    console.log("this is the err: " + err);
                 }
             )
         }
