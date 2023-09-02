@@ -49,6 +49,10 @@
              * @param onError - Function to be called if HTTP request returns an error.
              */
             getGroupingDescription(groupingPath, onSuccess, onError) {
+                var testingString = 'world'; 
+                console.log(`hello ${testingString}`);
+                console.log(`hello ${testingString}` + "!");
+                console.log(`hello ` + testingString + "!");
                 let endpoint = BASE_URL + "groupings/" + groupingPath + "/description";
                 dataProvider.loadData(endpoint, onSuccess, onError);
             },
