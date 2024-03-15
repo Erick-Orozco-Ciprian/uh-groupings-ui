@@ -7,14 +7,14 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import edu.hawaii.its.groupings.type.Feedback;
+import edu.hawaii.its.groupings.controller.ErrorControllerAdvice;
 
 @RestController
 public class ErrorRestController {
@@ -28,5 +28,12 @@ public class ErrorRestController {
         String exceptionMessage = body.get("exceptionMessage");
         session.setAttribute("feedback", new Feedback(exceptionMessage));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/api/groupings/testing/exception")
+    public ResponseEntity<String> throwException() {
+        logger.info("Entered REST throwException...");
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

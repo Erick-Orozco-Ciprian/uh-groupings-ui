@@ -3,6 +3,12 @@ package edu.hawaii.its.groupings.controller;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -13,7 +19,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -43,7 +52,7 @@ public class ErrorRestControllerTest {
 
     @Test
     public void httpPostFeedbackError() throws Exception {
-        HttpSession session = mockMvc.perform(post("/feedback/error")
+        HttpSession session = mockMvc.perform(get("/feedback/error")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"exceptionMessage\":\"exception\"}"))
                 .andExpect(status().isNoContent())
@@ -57,4 +66,16 @@ public class ErrorRestControllerTest {
         assertThat(feedback.getExceptionMessage(), is("exception"));
     }
 
+    @Test
+    public void httpGetExceptionError() throws Exception {
+        HttpSession session = mockMvc.perform(get("/api/groupings/testing/exception")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"exceptionMessage\":\"exception\"}"))
+                .andExpect(status().isInternalServerError())
+                .andReturn()
+                .getRequest()
+                .getSession();
+
+        assert session != null;
+    }
 }
